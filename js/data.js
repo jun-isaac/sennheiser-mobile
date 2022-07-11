@@ -1,4 +1,5 @@
-const data = [{
+const data = [
+    {
         category: 'wireless',
         name: 'MOMENTUM True Wireless 3',
         price: '349,000',
