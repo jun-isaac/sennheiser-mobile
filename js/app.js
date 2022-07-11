@@ -1,3 +1,28 @@
+// 검색창 컴포넌트 UI
+$(function(){
+    const html = `
+    <!-- 검색 UI -->
+    <div class="search-box">
+        <form class="search-box-container">
+            <input 
+            type="search"
+            id="search"
+            placeholder="검색"
+            required
+            >
+            <div class="button-group">
+                <button id="submit" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+                <button class="btn-close">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>`;
+    $('body').append(html);
+});
+
 $(function(){
 
     /* #gnb toggle
@@ -12,28 +37,31 @@ $(function(){
         $('#gnb').removeClass('on');
     });
 
-});
+    /*** 검색창 열고, 닫기 ***/
+
+    $('#icon-menu .bi-search').click(function(){
+        $(".search-box").addClass('on');
+    })
+    $('.search-box .btn-close').click(function(){
+        $(".search-box").removeClass('on');
+    })
+
+}); // $
 
 // 서버에 데이터 요청(request)
-fetch('https://raw.githubusercontent.com/csslick/animal-mobile/main/animal-data.json')
+function getData(){
+    //
+    const DataURL = 'https://raw.githubusercontent.com/jun-isaac/sennheiser-mobile/main/js/data.json'
+    fetch(DataURL)
     .then(function (res) {
         return res.json(); // JSON 객체 변환
     })
     .then(function (obj) {
         // 최종 데이터 출력(object)
         showProducts(obj);
-
-        /*
-        for(let i = 0; i < obj.length; i++){
-            let html =`
-            <div class="col">
-                <img src="${obj[i].imgUrl}" alt="dog01">
-                <p class="name">${obj[i].name}</p>
-            </div>
-            `
-            $('.row').append(html);
-        }
-        */
+        console.log(obj);
+    });
+}
 
         // forEach() 반복문
         function showProducts(obj) {
@@ -57,16 +85,25 @@ fetch('https://raw.githubusercontent.com/csslick/animal-mobile/main/animal-data.
                 // 요청한 params와 동물 카테고리명이 일치하는 데이터만 출력
                 if (params == animal.category) {
                     let html = `
-                    <div class="col">
-                        <img src="${animal.imgUrl}" alt="dog01">
-                        <p class="name">${animal.name}</p>
+                    <div class="product">
+                        <a href="detail.html">
+                            <img src="images/cx plus true wireless k.webp" alt="">
+                            <div class="info">
+                                <span class="category">wireless</span>
+                                <p class="title">MOMEN TUM True wireless 3</p>
+                                <p class="price"><span>₩</span>170,900</p>
+                            </div>
+                        </a>
                     </div>
                 `
                     $('.row').append(html);
                 }
             });
         }
-    });
+
+        $(function(){
+            getData();
+        })
 
 
 /* 파라미터를 전달하여 요청하기
